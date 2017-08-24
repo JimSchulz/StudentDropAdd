@@ -127,7 +127,7 @@ if (userSource == 'S') {  // Student
 //}
 
 // Assgin table label
-document.getElementById("pbid-CourseDropLabel").innerHTML = "Course Drops and Grading Track Changes";
+document.getElementById("pbid-CourseDropLabel").innerHTML = "Course Drop and Grading Track Changes";
 
 // Show CourseDropForm
 $CourseDropForm.$visible = true;

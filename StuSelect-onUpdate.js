@@ -63,11 +63,23 @@ if (stuSelect != null) {
       // Hide CourseDropForm  & DropCourseButtonsForm
       $CourseDropForm.$visible = false;
       $DropCourseButtonsForm.$visible = false;
+      $BlockClassSearch.$visible = false;
+      $BlockCourseAdd.$visible = false;
+
+      // Hide AddConsentEntry
+      document.getElementById("pbid-AddConsentEntry-container").style.display = "none";
 
       // Show the BlockCourseAddEntry and BlockCourseDrop objects
       $BlockCourseAddEntry.$visible = true;
       $BlockNull03.$visible = true;
       $BlockCourseDrop.$visible = true;
+
+      // Change the DropGrid background to white
+      document.getElementById('pbid-DropGrid').style.backgroundColor= "#FFFFFF";
+
+      // Reset Drop fields
+      document.getElementById('pbid-DropTerm').value = '';
+      document.getElementById('pbid-DropBlock').value = '';
 
       // Load Student Information
       $StuNameID.$load();

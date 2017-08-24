@@ -55,6 +55,17 @@ function(response) {
     // Hide the DropGrid buttons
     document.getElementById('pbid-DropApplyChanges').style.display = 'none';
     document.getElementById('pbid-DropReset').style.display = 'none';
+
+    // Hide these objects
+    $BlockClassSearch.$visible = false;
+    $BlockCourseAdd.$visible = false;
+
+    // Change the DropGrid background to white
+    document.getElementById('pbid-DropGrid').style.backgroundColor= "#FFFFFF";
+
+    // Reset Drop fields
+    document.getElementById('pbid-DropTerm').value = '';
+    document.getElementById('pbid-DropBlock').value = '';
   },
   function(response) {
     var errorMessage = response.data.errors?response.data.errors.errorMessage:null;

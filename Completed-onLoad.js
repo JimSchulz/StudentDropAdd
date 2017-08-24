@@ -47,6 +47,21 @@ function showHide() {
       $BlockCourseDrop.$visible = true;
       $ProcessingData.$visible = false;
 
+      // Change the DropGrid background to white
+      document.getElementById('pbid-DropGrid').style.backgroundColor= "#FFFFFF";
+
+      // Reset Drop fields
+      document.getElementById('pbid-DropTerm').value = '';
+      document.getElementById('pbid-DropBlock').value = '';
+
+      // Reset the ClassSearch form
+      document.getElementById('pbid-ClassSearch').reset();
+
+      // Hide the Class Search and Result objects
+      $BlockClassSearch.$visible = false;
+      $BlockNull05.$visible = false;
+      $BlockCourseAdd.$visible = false;
+
       alert("Course has been added to your schedule.",{flash:true});
     }
     else {

@@ -8,6 +8,7 @@
 var table = document.getElementById("pbid-DropGrid");
 var i = 0;
 var summerDropFound = 0;
+var dropFound = 0;
 var dropsIn = '';
 var changesIn = '';
 var dropPasscodeIn = '';
@@ -15,9 +16,10 @@ var trackLabel = '';
 var trk;
 var paws;
 var term = '';
-var dropConfirmNormalMsg = "Are you sure you want to apply this change? You may be releasing this seat.  If the class is full, rejoining this class might place you on the waiting-list.";
-var dropConfirmSummerMsg = 'FINANCIAL RESPONSIBILITY\n\nStudents may drop a summer on-campus course three (3) weeks before the course start date with no tuition penalty. When a student drops after three (3) weeks prior to the start date, or up to the third day of the course, 30% of tuition is charged. When a student drops a course after the third day of the block, 100% of tuition is charged. In the case that the Wild Card is available, one may forfeit the Wild Card in lieu of tuition charges.';
-var dropConfirmMsg = '';
+var trackChangeConfirmMsg = "Are you sure you want to apply this course track change(s)?";
+var dropConfirmMsg = "Are you sure you want to drop this course? You will be releasing this seat.  If the class is full, rejoining this class might place you on the waiting-list.";
+var dropConfirmSummerMsg = "FINANCIAL RESPONSIBILITY\n\nStudents may drop a summer on-campus course three (3) weeks before the course start date with no tuition penalty. When a student drops after three (3) weeks prior to the start date, or up to the third day of the course, 30% of tuition is charged. When a student drops a course after the third day of the block, 100% of tuition is charged. In the case that the Wild Card is available, one may forfeit the Wild Card in lieu of tuition charges.";
+var confirmMsg = '';
 
 // Loop through all DropGrid rows to find any summer course drop
 for (i=0; i<table.rows.length-1; i++) {
@@ -25,20 +27,26 @@ for (i=0; i<table.rows.length-1; i++) {
   term = $DropGrid.$data[i].ACADPERIOD;
   if (trk.options[trk.selectedIndex].text == 'Drop' && term.substring(4,6) == '30') {
     summerDropFound = 1;
-    break;
+  }
+  if (trk.options[trk.selectedIndex].text == 'Drop') {
+    dropFound = 1;
   }
 }
 
-// Assign the appropreiate drop confirmation message
-if (summerDropFound) {
-  dropConfirmMsg = dropConfirmNormalMsg + '\n\n' + dropConfirmSummerMsg;
+// Assign the appropriate drop confirmation message
+if (dropFound == 1) {
+  confirmMsg = dropConfirmMsg;
 }
-else {
-  dropConfirmMsg = dropConfirmNormalMsg;
+if (summerDropFound) {
+  confirmMsg = dropConfirmMsg + '\n\n' + dropConfirmSummerMsg;
+}
+if (dropFound == 0) {
+  confirmMsg = trackChangeConfirmMsg;
 }
 
+
 // Prompt user to verify changes
-if (confirm(dropConfirmMsg) == true) {
+if (confirm(confirmMsg) == true) {
 
   // Process Drops and/or Grading Track Changes
 

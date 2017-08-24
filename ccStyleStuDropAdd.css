@@ -257,7 +257,7 @@ label.pb-label.pb-boolean{
   width: 5.4em;
 }
 #pbid-AddTermEntry-container {
-  padding-bottom: 1em !Important;
+  padding-bottom: 0.4em !Important;
 }
 #pbid-AddTermEntry,
 #pbid-AddCRNEntry,

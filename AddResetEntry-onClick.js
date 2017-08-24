@@ -17,6 +17,13 @@ $BlockClassSearch.$visible = false;
 $BlockNull05.$visible = false;
 $BlockCourseAdd.$visible = false;
 
+// Change the DropGrid background to white
+document.getElementById('pbid-DropGrid').style.backgroundColor= "#FFFFFF";
+
+// Reset Drop fields
+document.getElementById('pbid-DropTerm').value = '';
+document.getElementById('pbid-DropBlock').value = '';
+
 // Procedure call - Student Check - This loads the SZRDRAD table
 $studentCheck.$post({
   stu_pidm: document.getElementById('pbid-PassPIDM').value,
@@ -41,9 +48,10 @@ function(response) {
     document.getElementById("pbid-CourseDropLabel").innerHTML = "Loading...";
     document.getElementById('pbid-UserButton').click();
 
-    // Hide CourseDropForm  & DropCourseButtonsForm
+    // Hide these objects
     $CourseDropForm.$visible = false;
     $DropCourseButtonsForm.$visible = false;
+    $BlockCourseAdd.$visible = false;
 
     // Show the BlockCourseAddEntry and BlockCourseDrop objects
     $BlockCourseAddEntry.$visible = true;
