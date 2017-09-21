@@ -42,6 +42,15 @@ $AddVerifyForm.$visible = false;
 var userType = '';
 var auth = '';
 
+// Internet Explorer 6-11
+var isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+// IE Browser Test
+if (isIE) {
+  alert("This applicaiton does not support Internet Explorer.  Please choose a different browser.",{flash:true});
+  return;
+}
+
 // Determine what kind of user is signing on (Web Tailor)
 for (i=0; i<$$user.authorities.length; i++) {
   auth = $$user.authorities[i].objectName;

@@ -51,3 +51,5 @@ for (i=0; i<table.rows.length-1; i++) {
 }  // Close For Loop
 
 document.getElementById('pbid-UserButton').click();
+
+alert("Search Results displayed below.",{flash:true});
