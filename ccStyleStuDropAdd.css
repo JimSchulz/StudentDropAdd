@@ -162,13 +162,13 @@ input.pb-item.pb-tel
 {
   width: 25em;
   height: 2.2em !important;
-  line-height: 1px;  /* For IE */
+  height: auto;
   border-radius: 4px;
   border: 1px solid #869FB1;
   box-shadow: inset 4px 4px 4px #E2EAEF;
-  box-sizing: border-box;
   background-color: #FFFFFF;
   font-size: 0.875em;
+  padding: 1px;
   padding-left: 9px;
  }
  input.pb-item:focus {
@@ -219,7 +219,7 @@ label.pb-label.pb-boolean{
   border: none;
   box-shadow: none;
   width: 22.6em;
-  padding-top: 0.5em !Important;
+  padding-top: 0.4em !Important;
   padding: 1em 0.75em;  /* For Firefox */
 }
 #pbid-AddVerifyForm {

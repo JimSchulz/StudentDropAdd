@@ -85,88 +85,74 @@ else if (userType == 'Stu') {
   var userSource = 'S';
   document.getElementById('pbid-UserButton').click();
 
-  // The FirstFunction gets the user's pidm
-  function firstFunction() {
-    var deferred = $.Deferred();
-    var nextStep = function() {
-      if ($UserPIDM == null) {
-        $UserPIDM.$load();
-        setTimeout(nextStep, 100); 
-      }
-      else {
-        $PassPIDM = document.getElementById('pbid-UserPIDM').value;
-        deferred.resolve(i);
-      }
-    }
-    nextStep();
-    return deferred.promise();
-  }
+  $UserPIDM.$load();
 
-  // The SecondFunction calls the FirstFunction
-  // We do this to make JavaScript wait for completion of the $UserPIDM.$load DB call
-  function secondFunction() {
-    var promise = firstFunction();
-    promise.then(function(result) { 
+  waitForUserPidm();
+}
+else {
+  document.getElementById("pbid-UserSource").value = null;  // Not Allowed
 
-      var passPIDM = document.getElementById('pbid-UserPIDM').value;
+  // Hide the student lookup block
+  $BlockStuLookup.$visible = false;
+  $BlockNull02.$visible = false;
 
-      // Procedure call - Student Check - This loads the SZRDRAD table
-      $studentCheck.$post({  // ---------- studentCheck Post
+  alert("You're not authorized to use the Drop/Add application.",{type:"error"});
+}
+
+
+function waitForUserPidm() {
+
+  // The waitForUserPidm function calls the isUserPidmLoaded function
+  // We do this to make JavaScript wait for the completion of the DB call ($load)
+
+  var promise = isUserPidmLoaded();
+  promise.then(function(result) {
+
+    // Promise fulfilled.  UserPIDM has completed its load.
+
+    var passPIDM = document.getElementById('pbid-UserPIDM').value;
+
+    // Procedure call - Student Check - This loads the SZRDRAD table
+    $studentCheck.$post({  // ---------- studentCheck Post
+      stu_pidm: passPIDM,
+      user_source: userSource
+    },
+    null,
+    function(response) {  // ---------- studentCheck Success
+      // Success!
+
+      // Procedure call - Drop Check - This checks course drops
+      $dropCheck.$post({  // ---------- dropCheck Post
         stu_pidm: passPIDM,
-        user_source: userSource
+        user_source: userSource,
+        drops_in: null,
+        changes_in: null,
+        passcode_in: null
       },
       null,
-      function(response) {  // ---------- studentCheck Success
+      function(response) {  // ---------- dropCheck Success
+        
         // Success!
 
-        // Procedure call - Drop Check - This checks course drops
-        $dropCheck.$post({  // ---------- dropCheck Post
-          stu_pidm: passPIDM,
-          user_source: userSource,
-          drops_in: null,
-          changes_in: null,
-          passcode_in: null
-        },
-        null,
-        function(response) {  // ---------- dropCheck Success
-          // Success!
+        // Show the BlockCourseAddEntry and BlockCourseDrop objects
+        $BlockCourseAddEntry.$visible = true;
+        $BlockNull03.$visible = true;
+        $BlockCourseDrop.$visible = true;
+        document.getElementById("pbid-CourseDropLabel").innerHTML = "Loading...";
 
-          // Show the BlockCourseAddEntry and BlockCourseDrop objects
-          $BlockCourseAddEntry.$visible = true;
-          $BlockNull03.$visible = true;
-          $BlockCourseDrop.$visible = true;
-          document.getElementById("pbid-CourseDropLabel").innerHTML = "Loading...";
-
-          // Load Student Information
-          $AddTermEntry.$load();
-          $AddTrackEntry.$load();
-          $StuNameID.$load();
-          $AddEntryStuName.$load();
-          $AddEntryStuClass.$load();
-          $AddMessage.$load({clearCache:true});
-          $DropMessage.$load({clearCache:true});
-          $AddButtonText.$load({clearCache:true});
-          $Processing.$load({clearCache:true});
-          $DropGrid.$load({clearCache:true});
-        },
-        function(response) {  // ---------- dropCheck Error
-          var errorMessage = response.data.errors?response.data.errors.errorMessage:null;
-          if (response.data.errors.errorMessage) {
-            errorMsg = response.data.errors.errorMessage;
-          }
-          else if (response.data.errors[0].errorMessage) {
-            errorMsg = response.data.errors[0].errorMessage;
-          }
-          else {
-            errorMsg = errorMessage?errorMessage:response.data;
-          }
-          if (errorMsg) {
-            alert("UserID dropCheck Error: " + errorMsg,{type:"error"});  // Error
-            return;
-          }
-        });  // ---------- dropCheck Close
+        // Load Student Information
+        $AddTermEntry.$load();
+        $AddTrackEntry.$load();
+        $StuNameID.$load();
+        $AddEntryStuName.$load();
+        $AddEntryStuClass.$load();
+        $AddMessage.$load({clearCache:true});
+        $DropMessage.$load({clearCache:true});
+        $AddButtonText.$load({clearCache:true});
+        $Processing.$load({clearCache:true});
+        $DropGrid.$load({clearCache:true});
       },
-      function(response) {  // ---------- studentCheck Error
+      function(response) {  // ---------- dropCheck Error
         var errorMessage = response.data.errors?response.data.errors.errorMessage:null;
         if (response.data.errors.errorMessage) {
           errorMsg = response.data.errors.errorMessage;
@@ -178,22 +164,44 @@ else if (userType == 'Stu') {
           errorMsg = errorMessage?errorMessage:response.data;
         }
         if (errorMsg) {
-          alert("UserID studentCheck Error: " + errorMsg,{type:"error"});  // Error
+          alert("UserID dropCheck Error: " + errorMsg,{type:"error"});  // Error
           return;
         }
-      });  // ---------- studentCheck Close
+      });  // ---------- dropCheck Close
+    },
+    function(response) {  // ---------- studentCheck Error
+      var errorMessage = response.data.errors?response.data.errors.errorMessage:null;
+      if (response.data.errors.errorMessage) {
+        errorMsg = response.data.errors.errorMessage;
+      }
+      else if (response.data.errors[0].errorMessage) {
+        errorMsg = response.data.errors[0].errorMessage;
+      }
+      else {
+        errorMsg = errorMessage?errorMessage:response.data;
+      }
+      if (errorMsg) {
+        alert("UserID studentCheck Error: " + errorMsg,{type:"error"});  // Error
+        return;
+      }
+    });  // ---------- studentCheck Close
 
-    });
-  }
-
-  secondFunction();
+  });
 }
-else {
-  document.getElementById("pbid-UserSource").value = null;  // Not Allowed
 
-  // Hide the student lookup block
-  $BlockStuLookup.$visible = false;
-  $BlockNull02.$visible = false;
-
-  alert("You're not authorized to use the Drop/Add application.",{type:"error"});
+function isUserPidmLoaded() {  // See if the UserPIDM is loaded
+  var deferred = $.Deferred();
+  var nextStep = function() {
+    if ($UserPIDM == null) {
+      // UserPIDM is not loaded yet, wait a little more.
+      setTimeout(nextStep, 100); 
+    }
+    else {
+      // UserPIDM has loaded
+      $PassPIDM = document.getElementById('pbid-UserPIDM').value;
+      deferred.resolve("UserPIDM Loaded");
+    }
+  }
+  nextStep();
+  return deferred.promise();
 }

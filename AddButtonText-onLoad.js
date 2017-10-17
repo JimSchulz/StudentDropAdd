@@ -6,7 +6,7 @@ var showHideButton;
 
 function waitForIt() {
   // We pause a moment to allow DB retrieval time for the AddButtonText value
-  showHideButton = setTimeout(showHide, 100);
+  showHideButton = setTimeout(showHide, 200);
 }
 
 function showHide() {
