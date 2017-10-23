@@ -1,7 +1,7 @@
 // DropMessage - onLoad
 
 // Show or Hide the Drop Message
-if (document.getElementById('pbid-DropMessage').value == '' || document.getElementById('pbid-DropMessage').value == null) {
+if ($DropMessage.DROP_MESSAGE == '' || $DropMessage.DROP_MESSAGE == null) {
   $CourseDropMessageForm.$visible = false;
 }
 else {
