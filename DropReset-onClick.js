@@ -66,6 +66,7 @@ function(response) {
     // Reset Drop fields
     document.getElementById('pbid-DropTerm').value = '';
     document.getElementById('pbid-DropBlock').value = '';
+    $DroppingCourse = null;
   },
   function(response) {
     var errorMessage = response.data.errors?response.data.errors.errorMessage:null;

@@ -47,14 +47,14 @@ if (dropPolicy == 0) {
 }
 else {
 
-  // Course Drop
+  // User is dropping a course
 
   // Hide the DropGrid Apply Changes button (This is a course drop)
   document.getElementById('pbid-DropApplyChanges').style.display = 'none';
   document.getElementById('pbid-DropReset').style.display = 'block';
 
   // Change the DropGrid background to grey
-  document.getElementById('pbid-DropGrid').style.backgroundColor= "#c2c2c3";
+  document.getElementById('pbid-DropGrid').style.backgroundColor = "#c2c2c3";
 
   // Reset the ClassSearch form
   document.getElementById('pbid-ClassSearch').reset();
@@ -62,6 +62,16 @@ else {
   // Hide BlockClassSearch and BlockAddCourse
   $BlockClassSearch.$visible = false;
   $BlockAddCourse.$visible = false;
+
+  // Save the dropping action.
+  // The Virtual Domain StuAddGrid uses the DroppingCourse variable to 
+  // determinine when to retrieve courses that are full or not full.
+  // This is done to prevent a student from replacing a dropped course
+  // with a waitlisted course.
+  // $DroppingCourse = 0 means get only courses with available seats.
+  // $DroppingCourse = null means get all courses. (Course Add only).
+
+  $DroppingCourse = 0;
 }
 
 function disableTrackSelect() {

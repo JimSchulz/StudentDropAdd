@@ -45,6 +45,10 @@ if (stuSelect != null) {
   function(response) {
     // Success!
 
+    // Turn off Message forms
+    $AddEntryMessageForm.$visible = false;
+    $CourseDropMessageForm.$visible = false;
+
     // Procedure call - Drop Check - This checks course drops
     $dropCheck.$post({
       stu_pidm: stuSelect,
@@ -60,7 +64,7 @@ if (stuSelect != null) {
       document.getElementById("pbid-CourseDropLabel").innerHTML = "Loading...";
       document.getElementById('pbid-UserButton').click();
 
-      // Hide CourseDropForm  & DropCourseButtonsForm
+      // Hide CourseDropForm & DropCourseButtonsForm
       $CourseDropForm.$visible = false;
       $DropCourseButtonsForm.$visible = false;
       $BlockClassSearch.$visible = false;
@@ -80,6 +84,7 @@ if (stuSelect != null) {
       // Reset Drop fields
       document.getElementById('pbid-DropTerm').value = '';
       document.getElementById('pbid-DropBlock').value = '';
+      $DroppingCourse = null;
 
       // Load Student Information
       $StuNameID.$load();
