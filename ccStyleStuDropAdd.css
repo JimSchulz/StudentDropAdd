@@ -129,6 +129,41 @@ h3 {
   white-space: normal;
 }
 
+/* Student Lookup Block ********************************************************************/
+#pbid-BlockStuLookupLabels {
+  white-space: nowrap;
+  background-color: #FFFFFF;
+}
+#pbid-StuLookupLabel-container {
+  display: inline-block;
+}
+#pbid-LookupInstructions-container {
+  display: inline-block;
+  padding-left: 100px;
+}
+#pbid-LookupInstructions {
+  text-align: left;
+}
+#pbid-StuLookupForm {
+  white-space: nowrap;
+  background-color: #FFFFFF;
+}
+#pbid-StuLookup-container {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 0em !Important;
+}
+#pbid-StuSearch-container {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 0em !Important;
+}
+#pbid-StuSelect-container {
+  display: inline-block;
+  vertical-align: top;
+  padding-top: 0em !Important;
+}
+
 /* Class Search Grid ***********************************************************************/
 
 #pbid-ClassSearch {                         /* Grid */
@@ -241,11 +276,20 @@ h3 {
 #pbid-SearchCampusSelect {
   display: inline-block;
 }
-#pbid-ClassSearchsubmit-container {         /* Column two */
+#pbid-BlockClassSearchButtons {         /* Column two */
   white-space: nowrap;
   grid-column: 2;
   grid-row: 6;
-  padding-left: 125px;
+  padding-top: 16px;
+}
+#pbid-ClassSearchSubmit-container {
+  display: inline-block;
+  padding-left: 15px;
+  padding-left: 120px;
+}
+#pbid-ClassSearchReturn-container {
+  display: inline-block;
+  padding-left: 15px;
 }
 
 /* Grid Styles ****************************************************************************/
@@ -354,6 +398,7 @@ label.pb-label.pb-boolean{
 }
 
 /* Add and Drop Section Labels **********************************************************************/
+#pbid-StuLookupLabel-container,
 #pbid-CourseAddLabel-container,
 #pbid-CourseDropLabel-container,
 #pbid-CourseAddSearchLabel-container {

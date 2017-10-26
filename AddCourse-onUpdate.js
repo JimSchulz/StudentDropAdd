@@ -22,13 +22,18 @@ for (i=0; i<rows; i++) {
     // Set the CRN within the AddEntryForm
     $AddCRNEntry = $AddGrid.$data[i].CRN;
 
-    // Hide the Class Schedule Search and Class Schedule Search Results sections
+    // Hide the Class Schedule Search and Class Schedule Search Results blocks
     $BlockClassSearch.$visible = false;
     $BlockCourseAdd.$visible = false;
+
+    // Show the Course Add and Course Drop blocks
+    $BlockCourseAddEntry.$visible = true;
+    $BlockCourseDrop.$visible = true;
 
     // Reset the Class Search Results form
     document.getElementById("pbid-AddCourse-" + i).click();  // Maintain state of checkbox
     document.getElementById("pbid-CourseAddForm").reset();
+    document.getElementById('pbid-ClassSearch').reset();
 
     break;
   }

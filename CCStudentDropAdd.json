@@ -357,7 +357,7 @@
                               "model": "getStudent.STU_NAME_ID",
                               "style": "",
                               "label": "",
-                              "loadInitially": true,
+                              "loadInitially": false,
                               "type": "text",
                               "parameters": {
                                     "stu_pidm": "$PassPIDM"
@@ -382,17 +382,29 @@
                   "name": "BlockDropAddTitle",
                   "showInitially": true,
                   "style": "",
-                  "label": "Drop/Add and Grading Track Changes",
+                  "label": "Drop Add and Grading Track Changes",
                   "type": "block"
             },
             {
                   "components": [
                         {
-                              "name": "LookupInstructions",
-                              "style": "",
-                              "label": "",
-                              "type": "literal",
-                              "value": "<center>Enter a Student's ID or First Name or Last Name</center>"
+                              "name": "BlockStuLookupLabels",
+                              "type": "block",
+                              "showInitially": true,
+                              "components": [
+                                    {
+                                          "name": "StuLookupLabel",
+                                          "type": "literal",
+                                          "value": "Student Lookup"
+                                    },
+                                    {
+                                          "name": "LookupInstructions",
+                                          "style": "",
+                                          "label": "",
+                                          "type": "literal",
+                                          "value": "Enter a Student's ID or First Name or Last Name"
+                                    }
+                              ]
                         },
                         {
                               "components": [
@@ -401,7 +413,7 @@
                                           "name": "StuLookup",
                                           "onLoad": "",
                                           "model": "",
-                                          "style": "flex",
+                                          "style": "",
                                           "label": "",
                                           "loadInitially": true,
                                           "placeholder": "",
@@ -413,7 +425,7 @@
                                     {
                                           "onClick": "// StuSearch - onClick\n\nvar stuLkup = document.StuLookupForm.StuLookup.value;\n\nif (stuLkup.replace(/^\\s+/g, '').length == 0) {\n  document.StuLookupForm.StuLookup.focus();\n  alert(\"Student Lookup is empty.\", {flash: true,type:\"error\"});\n  return;\n}\n\ndocument.getElementById('pbid-StuSelect').options[0].text = 'Loading...';\n\n$StuSelect.$populateSource();",
                                           "name": "StuSearch",
-                                          "style": "flex",
+                                          "style": "",
                                           "label": "Search",
                                           "type": "button",
                                           "valueStyle": "btn btn-sm"
@@ -431,7 +443,7 @@
                                           "onLoad": "// StuSelect - onLoad\n\ndocument.getElementById('pbid-StuSearch').click();\n\nif (document.getElementById('pbid-StuSelect').options.length > 1) {\n  document.getElementById('pbid-StuSelect').options[0].text = 'Select a Student';\n}\nelse {\n  document.getElementById('pbid-StuSelect').options[0].text = 'No Students Found';\n}",
                                           "model": "StuSelect",
                                           "sourceModel": "studentLookup",
-                                          "style": "flex",
+                                          "style": "",
                                           "placeholder": "Waiting for a Lookup Value...",
                                           "labelKey": "STU_FULL_NAME",
                                           "valueKey": "STU_PIDM",
@@ -442,7 +454,7 @@
                               "nextButtonLabel": "Next",
                               "name": "StuLookupForm",
                               "showInitially": true,
-                              "style": "blockLookup",
+                              "style": "",
                               "type": "form"
                         }
                   ],
@@ -668,7 +680,7 @@
                         {
                               "components": [
                                     {
-                                          "onClick": "// SearchClassSchedule - onClick\n\n// Show/Hide the Class Schedule search section\n\nif ($BlockClassSearch.$visible == false) {\n  $BlockClassSearch.$visible = true;\n  $SearchTermSelect.$load({clearCache:true});\n  $SearchSubjectSelect.$load({clearCache:true});\n  $SearchDegReqSelect.$load({clearCache:true});\n  $SearchCampusSelect.$load({clearCache:true});\n  alert(\"Class Schedule form displayed below.\", {flash: true});\n}\nelse {\n  $BlockClassSearch.$visible = false;\n  $BlockCourseAdd.$visible = false;\n  document.getElementById('pbid-ClassSearch').reset();\n  $BlockCourseAdd.$visible = false;\n}",
+                                          "onClick": "// SearchClassSchedule - onClick\n\n// Show the Class Schedule search block and hide the Course Add and Course Drop blocks\n\nif ($BlockClassSearch.$visible == false) {\n  $BlockCourseAddEntry.$visible = false;\n  $BlockCourseDrop.$visible = false;\n  $BlockClassSearch.$visible = true;\n  $SearchTermSelect.$load({clearCache:true});\n  $SearchSubjectSelect.$load({clearCache:true});\n  $SearchDegReqSelect.$load({clearCache:true});\n  $SearchCampusSelect.$load({clearCache:true});\n}",
                                           "name": "SearchClassSchedule",
                                           "label": "Search Class Schedule",
                                           "type": "button",
@@ -964,11 +976,14 @@
                                           "labelKey": "TERM_LABEL",
                                           "type": "select",
                                           "valueKey": "TERM_VALUE",
-                                          "onUpdate": "// SearchTermSelect - onUpdate\n\n// Indicate SearchBlockSelect and SearchInstructorSelect are loading\ndocument.getElementById('pbid-SearchBlockSelect').options[0].text = 'Loading...';\ndocument.getElementById('pbid-SearchInstructorSelect').options[0].text = 'Loading...';\n\n// Load SearchBlockSelect and SearchInstructorSelect select lists\n$SearchBlockSelect.$load({clearCache:true});\n$SearchInstructorSelect.$load({clearCache:true});",
+                                          "onUpdate": "// SearchTermSelect - onUpdate\n\n// Indicate the SearchBlockSelect is loading\ndocument.getElementById('pbid-SearchBlockSelect').options[0].text = 'Loading...';\n\n// Load the SearchBlockSelect select lists\n$SearchBlockSelect.$load({clearCache:true});",
                                           "required": false
                                     },
                                     {
-                                          "sourceParameters": {},
+                                          "sourceParameters": {
+                                                "search_term": "$SearchTermSelect.$selected?$SearchTermSelect.$selected.TERM_VALUE:null",
+                                                "search_subject": "$SearchSubjectSelect.$selected?$SearchSubjectSelect.$selected.SUBJECT_VALUE:null"
+                                          },
                                           "name": "SearchSubjectSelect",
                                           "onLoad": "// SearchSubjectSelect - onLoad\n\ndocument.getElementById('pbid-SearchSubjectSelect').options[0].text = '';",
                                           "sourceModel": "getSubjects",
@@ -979,7 +994,7 @@
                                           "type": "select",
                                           "valueKey": "SUBJECT_VALUE",
                                           "required": false,
-                                          "onUpdate": "// SearchSubjectSelect - onUpdate\n\n// Indicate SearchInstructorSelect is loading\ndocument.getElementById('pbid-SearchInstructorSelect').options[0].text = 'Loading...';\n\n// Load SearchInstructorSelect select lists\n$SearchInstructorSelect.$load({clearCache:true});"
+                                          "onUpdate": "// SearchSubjectSelect - onUpdate\n\n// Edit\n\nif (document.getElementById('pbid-SearchTermSelect').options.selectedIndex == 0)  {\n  alert(\"Please select a term.\", {flash: true,type:\"error\"});\n  document.getElementById('pbid-SearchTermSelect').focus();\n  document.getElementById('pbid-SearchSubjectSelect').selectedIndex = '0';\n  return;\n}\n\n// Indicate SearchInstructorSelect is loading\ndocument.getElementById('pbid-SearchInstructorSelect').options[0].text = 'Loading...';\n\n// Load SearchInstructorSelect select list\n$SearchInstructorSelect.$load({clearCache:true});"
                                     },
                                     {
                                           "readonly": false,
@@ -1036,7 +1051,7 @@
                                                 "search_subject": "$SearchSubjectSelect.$selected?$SearchSubjectSelect.$selected.SUBJECT_VALUE:null"
                                           },
                                           "name": "SearchInstructorSelect",
-                                          "onLoad": "// SearchInstructorSelect - onLoad\n\ndocument.getElementById('pbid-UserButton').click();\n\ndocument.getElementById('pbid-SearchInstructorSelect').options[0].text = '';\n\ndocument.getElementById('pbid-SearchInstructorSelect').selectedIndex = '0';\n\ndocument.getElementById('pbid-SearchInstructorSelect').remove(document.getElementById('pbid-SearchInstructorSelect').length-1);",
+                                          "onLoad": "// SearchInstructorSelect - onLoad\n\ndocument.getElementById('pbid-UserButton').click();\n\ndocument.getElementById('pbid-SearchInstructorSelect').options[0].text = '';\n\ndocument.getElementById('pbid-SearchInstructorSelect').selectedIndex = '0';\n\nif (document.getElementById('pbid-SearchInstructorSelect').length > 1) {\n document.getElementById('pbid-SearchInstructorSelect').remove(document.getElementById('pbid-SearchInstructorSelect').length-1);\n}",
                                           "sourceModel": "getInstructors",
                                           "label": "Instructor",
                                           "loadInitially": false,
@@ -1071,9 +1086,30 @@
                                           "type": "select",
                                           "valueKey": "CAMPUS_VALUE",
                                           "required": false
+                                    },
+                                    {
+                                          "name": "BlockClassSearchButtons",
+                                          "type": "block",
+                                          "showInitially": true,
+                                          "components": [
+                                                {
+                                                      "name": "ClassSearchSubmit",
+                                                      "type": "button",
+                                                      "label": "Class Search",
+                                                      "onClick": "// ClassSearchSubmit - onClick\n\n// Edits\n\nif (document.getElementById('pbid-SearchTermSelect').options.selectedIndex == 0)  {\n  alert(\"Please select a term.\", {flash: true,type:\"error\"});\n  document.getElementById('pbid-SearchTermSelect').focus();\n  return;\n}\n\nif (document.getElementById('pbid-SearchBlockSelect').options.selectedIndex == 0 && document.getElementById('pbid-DropBlock').value != '')  {\n  alert(\"Please select a block.\", {flash: true,type:\"error\"});\n  document.getElementById('pbid-SearchTermSelect').focus();\n  return;\n}\n\n// Remember that the $DroppingCourse variable is assigned in Track-onUpdate event.\n\n// Show the AddGrid\n$BlockCourseAdd.$visible = true;\n\ndocument.getElementById(\"pbid-CourseAddSearchLabel\").innerHTML = \"Loading...\";\n\n$AddGrid.$load({clearCache:true});",
+                                                      "valueStyle": "btn btn-sm"
+                                                },
+                                                {
+                                                      "name": "ClassSearchReturn",
+                                                      "type": "button",
+                                                      "label": "Return",
+                                                      "valueStyle": "btn btn-sm",
+                                                      "onClick": "// ClassSearchReturn - onClick\n\n$BlockCourseAddEntry.$visible = true;\n$BlockCourseDrop.$visible = true;\n$BlockClassSearch.$visible = false;"
+                                                }
+                                          ]
                                     }
                               ],
-                              "submit": "// ClassSearch - submit\n\n// Edits\n\nif (document.getElementById('pbid-SearchTermSelect').options.selectedIndex == 0)  {\n  alert(\"Please select a term.\", {flash: true,type:\"error\"});\n  document.getElementById('pbid-SearchTermSelect').focus();\n  return;\n}\n\nif (document.getElementById('pbid-SearchBlockSelect').options.selectedIndex == 0 && document.getElementById('pbid-DropBlock').value != '')  {\n  alert(\"Please select a block.\", {flash: true,type:\"error\"});\n  document.getElementById('pbid-SearchTermSelect').focus();\n  return;\n}\n\n// Remember that the $DroppingCourse variable is assigned in Track-onUpdate event.\n\n// Show the AddGrid\n$BlockCourseAdd.$visible = true;\n\ndocument.getElementById(\"pbid-CourseAddSearchLabel\").innerHTML = \"Loading...\";\n\n$AddGrid.$load({clearCache:true});",
+                              "submit": "",
                               "nextButtonLabel": "Next",
                               "name": "ClassSearch",
                               "showInitially": true,
@@ -1108,7 +1144,7 @@
                                                       "label": "",
                                                       "loadInitially": true,
                                                       "type": "boolean",
-                                                      "onUpdate": "// AddCourse - onUpdate\n\nvar rows = $AddGrid.$data.length;\nvar i = 0;\nvar k = 0;\n\n// Loop through all AddGrid rows\nfor (i=0; i<rows; i++) {\n\n  if (document.getElementById(\"pbid-AddCourse-\" + i).checked) {\n\n    // User checked an AddGrid's AddCourse checkbox\n\n    // Set Term within the AddEntryForm\n    for(k=0; k<document.getElementById('pbid-AddTermEntry').options.length; k++) {\n      if (document.getElementById('pbid-AddTermEntry').options[k].innerHTML == $AddGrid.$data[i].TERM) {\n        document.getElementById('pbid-AddTermEntry').selectedIndex = k;\n        break;\n      }\n    }\n\n    // Set the CRN within the AddEntryForm\n    $AddCRNEntry = $AddGrid.$data[i].CRN;\n\n    // Hide the Class Schedule Search and Class Schedule Search Results sections\n    $BlockClassSearch.$visible = false;\n    $BlockCourseAdd.$visible = false;\n\n    // Reset the Class Search Results form\n    document.getElementById(\"pbid-AddCourse-\" + i).click();  // Maintain state of checkbox\n    document.getElementById(\"pbid-CourseAddForm\").reset();\n\n    break;\n  }\n}"
+                                                      "onUpdate": "// AddCourse - onUpdate\n\nvar rows = $AddGrid.$data.length;\nvar i = 0;\nvar k = 0;\n\n// Loop through all AddGrid rows\nfor (i=0; i<rows; i++) {\n\n  if (document.getElementById(\"pbid-AddCourse-\" + i).checked) {\n\n    // User checked an AddGrid's AddCourse checkbox\n\n    // Set Term within the AddEntryForm\n    for(k=0; k<document.getElementById('pbid-AddTermEntry').options.length; k++) {\n      if (document.getElementById('pbid-AddTermEntry').options[k].innerHTML == $AddGrid.$data[i].TERM) {\n        document.getElementById('pbid-AddTermEntry').selectedIndex = k;\n        break;\n      }\n    }\n\n    // Set the CRN within the AddEntryForm\n    $AddCRNEntry = $AddGrid.$data[i].CRN;\n\n    // Hide the Class Schedule Search and Class Schedule Search Results blocks\n    $BlockClassSearch.$visible = false;\n    $BlockCourseAdd.$visible = false;\n\n    // Show the Course Add and Course Drop blocks\n    $BlockCourseAddEntry.$visible = true;\n    $BlockCourseDrop.$visible = true;\n\n    // Reset the Class Search Results form\n    document.getElementById(\"pbid-AddCourse-\" + i).click();  // Maintain state of checkbox\n    document.getElementById(\"pbid-CourseAddForm\").reset();\n    document.getElementById('pbid-ClassSearch').reset();\n\n    break;\n  }\n}"
                                                 },
                                                 {
                                                       "asHtml": true,

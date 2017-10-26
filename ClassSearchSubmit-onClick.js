@@ -1,4 +1,4 @@
-// ClassSearch - submit
+// ClassSearchSubmit - onClick
 
 // Edits
 
