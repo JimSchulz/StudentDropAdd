@@ -23,7 +23,6 @@ for (i=0; i<rows; i++) {
     $AddCRNEntry = $AddGrid.$data[i].CRN;
 
     // Hide the Class Schedule Search and Class Schedule Search Results sections
-    $BlockNull04.$visible = false;
     $BlockClassSearch.$visible = false;
     $BlockCourseAdd.$visible = false;
 

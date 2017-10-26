@@ -52,7 +52,6 @@ if (confirm(confirmMsg) == true) {
 
   // Hide the Add and Drop sections and show the ProcessingData section
   $BlockCourseAddEntry.$visible = false;
-  $BlockNull03.$visible = false;
   $BlockCourseDrop.$visible = false;
   $ProcessingData.$visible = true;
 
@@ -123,13 +122,11 @@ if (confirm(confirmMsg) == true) {
 
     // Show the Add and Drop sections and hide the ProcessingData section
     $BlockCourseAddEntry.$visible = true;
-    $BlockNull03.$visible = true;
     $BlockCourseDrop.$visible = true;
     $ProcessingData.$visible = false;
 
     // Show the BlockCourseAddEntry and BlockCourseDrop objects
     $BlockCourseAddEntry.$visible = true;
-    $BlockNull03.$visible = true;
     $BlockCourseDrop.$visible = true;
 
     // Load Student Information
@@ -161,7 +158,6 @@ if (confirm(confirmMsg) == true) {
 
       // Show the Add and Drop sections and hide the ProcessingData section
       $BlockCourseAddEntry.$visible = true;
-      $BlockNull03.$visible = true;
       $BlockCourseDrop.$visible = true;
       $ProcessingData.$visible = false;
 
@@ -208,7 +204,6 @@ else {
 
       // Show the BlockCourseAddEntry and BlockCourseDrop objects
       $BlockCourseAddEntry.$visible = true;
-      $BlockNull03.$visible = true;
       $BlockCourseDrop.$visible = true;
 
       // Load Student Information

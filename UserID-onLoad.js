@@ -71,14 +71,12 @@ if (userType == 'Reg' || userType == 'Dev') {
 
   // Show the student lookup block
   $BlockStuLookup.$visible = true;
-  $BlockNull02.$visible = true;
   document.getElementById("pbid-UserSource").value = 'R';  // Registrars or Dev User
 }
 else if (userType == 'Stu') {
 
   // Hide the student lookup block
   $BlockStuLookup.$visible = false;
-  $BlockNull02.$visible = false;
 
   // Prep data
   document.getElementById("pbid-UserSource").value = 'S';  // Student User
@@ -94,7 +92,6 @@ else {
 
   // Hide the student lookup block
   $BlockStuLookup.$visible = false;
-  $BlockNull02.$visible = false;
 
   alert("You're not authorized to use the Drop/Add application.",{type:"error"});
 }
@@ -136,7 +133,6 @@ function waitForUserPidm() {
 
         // Show the BlockCourseAddEntry and BlockCourseDrop objects
         $BlockCourseAddEntry.$visible = true;
-        $BlockNull03.$visible = true;
         $BlockCourseDrop.$visible = true;
         document.getElementById("pbid-CourseDropLabel").innerHTML = "Loading...";
 
@@ -145,6 +141,7 @@ function waitForUserPidm() {
         $AddTrackEntry.$load();
         $StuNameID.$load();
         $AddEntryStuName.$load();
+        $StuName.$load();
         $AddEntryStuClass.$load();
         $AddMessage.$load({clearCache:true});
         $DropMessage.$load({clearCache:true});

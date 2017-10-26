@@ -43,7 +43,6 @@ function showHide() {
 
       // Show the Add and Drop sections and hide the ProcessingData section
       $BlockCourseAddEntry.$visible = true;
-      $BlockNull03.$visible = true;
       $BlockCourseDrop.$visible = true;
       $ProcessingData.$visible = false;
 
@@ -59,7 +58,6 @@ function showHide() {
 
       // Hide the Class Search and Result objects
       $BlockClassSearch.$visible = false;
-      $BlockNull05.$visible = false;
       $BlockCourseAdd.$visible = false;
 
       alert("Course has been added to your schedule.",{flash:true});
@@ -82,7 +80,6 @@ function showHide() {
 
       // Show the Add and Drop sections and hide the ProcessingData section
       $BlockCourseAddEntry.$visible = true;
-      $BlockNull03.$visible = true;
       $BlockCourseDrop.$visible = true;
       $ProcessingData.$visible = false;
     }

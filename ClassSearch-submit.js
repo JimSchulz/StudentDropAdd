@@ -17,7 +17,6 @@ if (document.getElementById('pbid-SearchBlockSelect').options.selectedIndex == 0
 // Remember that the $DroppingCourse variable is assigned in Track-onUpdate event.
 
 // Show the AddGrid
-$BlockNull05.$visible = true;
 $BlockCourseAdd.$visible = true;
 
 document.getElementById("pbid-CourseAddSearchLabel").innerHTML = "Loading...";

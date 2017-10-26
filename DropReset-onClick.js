@@ -37,7 +37,6 @@ function(response) {
 
     // Show the BlockCourseAddEntry and BlockCourseDrop objects
     $BlockCourseAddEntry.$visible = true;
-    $BlockNull03.$visible = true;
     $BlockCourseDrop.$visible = true;
 
     // Load Student Information

@@ -14,7 +14,6 @@ document.getElementById("pbid-AddMessage").value = '';
 $AddEntryMessageForm.$visible = false;
 $AddVerifyForm.$visible = false;
 $BlockClassSearch.$visible = false;
-$BlockNull05.$visible = false;
 $BlockCourseAdd.$visible = false;
 
 // Change the DropGrid background to white
@@ -55,7 +54,6 @@ function(response) {
 
     // Show the BlockCourseAddEntry and BlockCourseDrop objects
     $BlockCourseAddEntry.$visible = true;
-    $BlockNull03.$visible = true;
     $BlockCourseDrop.$visible = true;
 
     // Load Student Information

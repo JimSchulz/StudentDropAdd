@@ -75,7 +75,6 @@ if (stuSelect != null) {
 
       // Show the BlockCourseAddEntry and BlockCourseDrop objects
       $BlockCourseAddEntry.$visible = true;
-      $BlockNull03.$visible = true;
       $BlockCourseDrop.$visible = true;
 
       // Change the DropGrid background to white
@@ -91,6 +90,7 @@ if (stuSelect != null) {
       $AddTermEntry.$load();
       $AddTrackEntry.$load();
       $AddEntryStuName.$load();
+      $StuName.$load();
       $AddEntryStuClass.$load();
       $AddMessage.$load({clearCache:true});
       $DropMessage.$load({clearCache:true});
@@ -137,12 +137,10 @@ if (stuSelect != null) {
 else {
   // Hide the BlockCourseAddEntry and BlockCourseDrop objects
   $BlockCourseAddEntry.$visible = false;
-  $BlockNull03.$visible = false;
   $BlockCourseDrop.$visible = false;
 
   // Hide the Class Search and Result objects
   $BlockClassSearch.$visible = false;
-  $BlockNull05.$visible = false;
   $BlockCourseAdd.$visible = false;
 }
 

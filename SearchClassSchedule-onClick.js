@@ -3,7 +3,6 @@
 // Show/Hide the Class Schedule search section
 
 if ($BlockClassSearch.$visible == false) {
-  $BlockNull04.$visible = true;
   $BlockClassSearch.$visible = true;
   $SearchTermSelect.$load({clearCache:true});
   $SearchSubjectSelect.$load({clearCache:true});
@@ -13,9 +12,7 @@ if ($BlockClassSearch.$visible == false) {
 }
 else {
   $BlockClassSearch.$visible = false;
-  $BlockNull05.$visible = false;
   $BlockCourseAdd.$visible = false;
   document.getElementById('pbid-ClassSearch').reset();
-  $BlockNull05.$visible = false;
   $BlockCourseAdd.$visible = false;
 }

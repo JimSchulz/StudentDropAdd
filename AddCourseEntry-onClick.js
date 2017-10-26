@@ -34,7 +34,6 @@ function processAdd() {
 
   // Hide the Add and Drop sections and show the ProcessingData section
   $BlockCourseAddEntry.$visible = false;
-  $BlockNull03.$visible = false;
   $BlockCourseDrop.$visible = false;
   $ProcessingData.$visible = true;
 
@@ -84,7 +83,6 @@ function processAdd() {
     if (errorMsg) {
       // Show the Add and Drop sections and hide the ProcessingData section
       $BlockCourseAddEntry.$visible = true;
-      $BlockNull03.$visible = true;
       $BlockCourseDrop.$visible = true;
       $ProcessingData.$visible = false;
 
