@@ -72,6 +72,9 @@ function(response) {
     document.getElementById('pbid-DropTerm').value = '';
     document.getElementById('pbid-DropBlock').value = '';
     $DroppingCourse = null;
+
+    // Enable the SearchClassSchedule button
+    document.getElementById('pbid-SearchClassSchedule').disabled = false;
   },
   function(response) {
     var errorMessage = response.data.errors?response.data.errors.errorMessage:null;

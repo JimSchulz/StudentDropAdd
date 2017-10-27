@@ -1,5 +1,6 @@
 // AddCourse - onUpdate
 
+var DropCourseRows = document.getElementById("pbid-DropGrid").rows.length;
 var rows = $AddGrid.$data.length;
 var i = 0;
 var k = 0;
@@ -28,7 +29,10 @@ for (i=0; i<rows; i++) {
 
     // Show the Course Add and Course Drop blocks
     $BlockCourseAddEntry.$visible = true;
-    $BlockCourseDrop.$visible = true;
+    if (DropCourseRows > 2) { 
+      // Even when a student has no courses, the pbid-DropGrid query still returns two header rows.
+      $BlockCourseDrop.$visible = true;
+    }
 
     // Reset the Class Search Results form
     document.getElementById("pbid-AddCourse-" + i).click();  // Maintain state of checkbox

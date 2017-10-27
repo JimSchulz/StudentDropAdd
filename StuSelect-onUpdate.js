@@ -43,6 +43,7 @@ if (stuSelect != null) {
   },
   null,
   function(response) {
+
     // Success!
 
     // Turn off Message forms
@@ -59,6 +60,7 @@ if (stuSelect != null) {
     },
     null,
     function(response) {
+
       // Success!
 
       document.getElementById("pbid-CourseDropLabel").innerHTML = "Loading...";
@@ -80,10 +82,16 @@ if (stuSelect != null) {
       // Change the DropGrid background to white
       document.getElementById('pbid-DropGrid').style.backgroundColor= "#FFFFFF";
 
+      // Reset Add fields
+      document.getElementById('pbid-AddEntryForm').reset();
+
       // Reset Drop fields
       document.getElementById('pbid-DropTerm').value = '';
       document.getElementById('pbid-DropBlock').value = '';
       $DroppingCourse = null;
+
+      // Enable the SearchClassSchedule button
+      document.getElementById('pbid-SearchClassSchedule').disabled = false;
 
       // Load Student Information
       $StuNameID.$load();
@@ -142,6 +150,8 @@ else {
   // Hide the Class Search and Result objects
   $BlockClassSearch.$visible = false;
   $BlockCourseAdd.$visible = false;
+
+  $StuName.STU_NAME_ID = '';
 }
 
 // Reset and Hide Add Verify fields

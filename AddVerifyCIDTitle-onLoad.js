@@ -7,4 +7,7 @@ if ($AddVerifyCIDTitle == '' || $AddVerifyCIDTitle == null) {
 }
 else {
   $AddVerifyForm.$visible = true;
+
+  // Disable the SearchClassSchedule button
+  document.getElementById('pbid-SearchClassSchedule').disabled = true;
 }

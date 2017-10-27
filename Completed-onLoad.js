@@ -4,6 +4,7 @@
 
 // Assign Completed value.  This shows us when a course add transaction is completed.
 
+var DropCourseRows = document.getElementById("pbid-DropGrid").rows.length;
 var paws;
 
 function waitForIt() {
@@ -43,7 +44,9 @@ function showHide() {
 
       // Show the Add and Drop sections and hide the ProcessingData section
       $BlockCourseAddEntry.$visible = true;
-      $BlockCourseDrop.$visible = true;
+      if (DropCourseRows > 2) { 
+        $BlockCourseDrop.$visible = true;
+      }
       $ProcessingData.$visible = false;
 
       // Change the DropGrid background to white
@@ -59,6 +62,12 @@ function showHide() {
       // Hide the Class Search and Result objects
       $BlockClassSearch.$visible = false;
       $BlockCourseAdd.$visible = false;
+
+      // Enable the SearchClassSchedule button
+      document.getElementById('pbid-SearchClassSchedule').disabled = false;
+
+      // Show the Course Drop block
+      $BlockCourseDrop.$visible = true;
 
       alert("Course has been added to your schedule.",{flash:true});
     }
@@ -80,7 +89,9 @@ function showHide() {
 
       // Show the Add and Drop sections and hide the ProcessingData section
       $BlockCourseAddEntry.$visible = true;
-      $BlockCourseDrop.$visible = true;
+      if (DropCourseRows > 2) { 
+        $BlockCourseDrop.$visible = true;
+      }
       $ProcessingData.$visible = false;
     }
   }

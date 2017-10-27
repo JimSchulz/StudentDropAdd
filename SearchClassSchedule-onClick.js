@@ -1,8 +1,9 @@
 // SearchClassSchedule - onClick
 
-// Show the Class Schedule search block and hide the Course Add and Course Drop blocks
-
 if ($BlockClassSearch.$visible == false) {
+
+  // Show the Class Schedule search block and hide the Course Add and Course Drop blocks
+
   $BlockCourseAddEntry.$visible = false;
   $BlockCourseDrop.$visible = false;
   $BlockClassSearch.$visible = true;
