@@ -14,83 +14,103 @@ var crn = crn.substring(crn.indexOf(":")+1,crn.length);
 var track = track.substring(track.indexOf(":")+1, track.length);
 var passcode = passcode.substring(passcode.indexOf(":")+1, passcode.length);
 
-// CRN maximum value edit
-if (crn.length > 5) {
-  alert("CRN value is greater than 5 digits.",{flash: true,type:"error"});
+// Term edit
+if (term.length == 0) {
+  alert("Term required.",{flash: true,type:"error"});
+  document.getElementById('pbid-AddTermEntry').focus();
   return;
 }
 
-$SummerOnCampus.$load({clearCache:true});  // Get the Summer course on-campus indicator
+// CRN edits
 
-$SummerOffCampus.$load({clearCache:true});  // Get the Summer course off-campus indicator
+// CRN null edit
+if (crn.length == 0) {
+  alert("CRN required.",{flash: true,type:"error"});
+  document.getElementById('pbid-AddCRNEntry').focus();
+  return;
+}
 
-waitForCampusVars();
+// CRN numeric edit
+if (isNaN(crn)) {
+  alert("CRN is not numeric.",{flash: true,type:"error"});
+  document.getElementById('pbid-AddCRNEntry').focus();
+  return;
+}
+
+// CRN maximum length value edit
+if (crn.length > 5) {
+  alert("CRN value is greater than 5 digits.",{flash: true,type:"error"});
+  document.getElementById('pbid-AddCRNEntry').focus();
+  return;
+}
+
+// CRN minimum length value edit
+if (crn.length < 5) {
+  alert("CRN value is less than 5 digits.",{flash: true,type:"error"});
+  document.getElementById('pbid-AddCRNEntry').focus();
+  return;
+}
+
+// Grading Track edit
+if (track.length == 0) {
+  alert("Grading Track required.",{flash: true,type:"error"});
+  document.getElementById('pbid-AddTrackEntry').focus();
+  return;
+}
+
+/*
+// Debug Code
+alert("passcode=" + passcode,{flash:true});
+alert("track=" + track,{flash:true});
+alert("crn=" + crn,{flash:true});
+alert("term=" + term,{flash:true});
+alert("user_source=" + document.getElementById('pbid-UserSource').value,{flash:true});
+alert("PassPIDM=" + $PassPIDM,{flash:true});
+*/
+
+// Load Block Off variable
+$BlockOff.BLOCK_OFF = null;
+$BlockOff.$load({clearCache:true});
+waitForBlockOff();
 
 
-function processAdd() {
-  // Make AddTermEntry and AddCRNEntry fields read-only during this transaction session.
-  document.getElementById("pbid-AddTermEntry").disabled = true;
-  document.getElementById('pbid-AddCRNEntry').readOnly = true;
+function waitForBlockOff() {
 
-  // Hide the Add and Drop sections and show the ProcessingData section
-  $BlockCourseAddEntry.$visible = false;
-  $BlockCourseDrop.$visible = false;
-  $ProcessingData.$visible = true;
+  // The waitForBlockOff function calls the isBlockOffLoaded function
+  // We do this to make JavaScript wait for the completion of the DB call ($load)
 
-  /* // Debug Code
-  alert("passcode="+ passcode,{flash:true});
-  alert("track="+ track,{flash:true});
-  alert("crn="+ crn,{flash:true});
-  alert("term="+ term,{flash:true});
-  alert("user_source="+ document.getElementById('pbid-UserSource').value,{flash:true});
-  alert("PassPIDM="+ $PassPIDM,{flash:true});
-  */
+  var promise = isBlockOffLoaded();
+  promise.then(function(result) {
 
-  // Procedure call - Add Check - This checks the course being added
-  $addCheck.$post({  // ---------- addCheck Post
-    stu_pidm: $PassPIDM,
-    user_source: document.getElementById('pbid-UserSource').value,
-    term_in: term,
-    crn_in: crn,
-    track_in: track,
-    passcode_in: passcode
-  },
-  null,
-  function(response) {  // ---------- addCheck Success
-    // Success!
-
-    // Load verify fields
-    $AddVerifyCIDTitle.$load({clearCache:true});
-    $AddVerifyInstructor.$load({clearCache:true});
-    $AddVerifyBlockUnit.$load({clearCache:true});
-
-    // Load Completed Status
-    // This is what tells us when a Course Add transaction is completed.
-    $Completed.$load({clearCache:true});
-  },
-  function(response) {  // ---------- addCheck Error
-    var errorMessage = response.data.errors?response.data.errors.errorMessage:null;
-
-    if (response.data.errors.errorMessage) {
-      errorMsg = response.data.errors.errorMessage;
-    }
-    else if (response.data.errors[0].errorMessage) {
-      errorMsg = response.data.errors[0].errorMessage;
-    } 
-    else {
-      errorMsg = errorMessage?errorMessage:response.data;
-    }
-    if (errorMsg) {
-      // Show the Add and Drop sections and hide the ProcessingData section
-      $BlockCourseAddEntry.$visible = true;
-      $BlockCourseDrop.$visible = true;
-      $ProcessingData.$visible = false;
-
-      alert("addCheck Error: " + errorMsg,{type:"error"});  // Display Error
+    if ($BlockOff.BLOCK_OFF == '1') {
+      // Multiple Blocks Off error
+      alert("You are not premitted to take a block off.  Please see Instructions for link to Student Time Off Policy.",{flash: true,type:"error"});
       return;
     }
+    else {
+      // Load Summer Campus variables
+      $SummerOnCampus.$load({clearCache:true});  // Get the Summer course on-campus indicator
+      $SummerOffCampus.$load({clearCache:true});  // Get the Summer course off-campus indicator
+      waitForCampusVars();
+    }
 
-  });  // ---------- addCheck Close
+  });
+}
+
+function isBlockOffLoaded() {
+  var deferred2 = $.Deferred();
+  var nextStep2 = function() {
+    if ($BlockOff.BLOCK_OFF == null) {
+      // BlockOff variable are not loaded yet, wait a little more.
+      setTimeout(nextStep2, 100); 
+    }
+    else {
+      // BlockOff variable is loaded
+      deferred2.resolve("BlockOff Variable Loaded");
+    }
+  }
+  nextStep2();
+  return deferred2.promise();
 }
 
 function waitForCampusVars() {
@@ -103,7 +123,7 @@ function waitForCampusVars() {
     
     // Promise fulfilled.  Database myVariable has completed its load.
     
-    // ----- Do stuff here -----
+    // Proceed with Summer Campus Edits
 
     if (document.getElementById("pbid-SummerOffCampus").value == 'Y') {
 
@@ -156,4 +176,61 @@ function areCampusVarsLoaded() {  // See if the Campus variables are loaded
   }
   nextStep();
   return deferred.promise();
+}
+
+function processAdd() {
+  // Make AddTermEntry and AddCRNEntry fields read-only during this transaction session.
+  document.getElementById("pbid-AddTermEntry").disabled = true;
+  document.getElementById('pbid-AddCRNEntry').readOnly = true;
+
+  // Hide the Add and Drop sections and show the ProcessingData section
+  $BlockCourseAddEntry.$visible = false;
+  $BlockCourseDrop.$visible = false;
+  $ProcessingData.$visible = true;
+
+  // Procedure call - Add Check - This checks the course being added
+  $addCheck.$post({  // ---------- addCheck Post
+    stu_pidm: $PassPIDM,
+    user_source: document.getElementById('pbid-UserSource').value,
+    term_in: term,
+    crn_in: crn,
+    track_in: track,
+    passcode_in: passcode
+  },
+  null,
+  function(response) {  // ---------- addCheck Success
+    // Success!
+
+    // Load verify fields
+    $AddVerifyCIDTitle.$load({clearCache:true});
+    $AddVerifyInstructor.$load({clearCache:true});
+    $AddVerifyBlockUnit.$load({clearCache:true});
+
+    // Load Completed Status
+    // This is what tells us when a Course Add transaction is completed.
+    $Completed.$load({clearCache:true});
+  },
+  function(response) {  // ---------- addCheck Error
+    var errorMessage = response.data.errors?response.data.errors.errorMessage:null;
+
+    if (response.data.errors.errorMessage) {
+      errorMsg = response.data.errors.errorMessage;
+    }
+    else if (response.data.errors[0].errorMessage) {
+      errorMsg = response.data.errors[0].errorMessage;
+    } 
+    else {
+      errorMsg = errorMessage?errorMessage:response.data;
+    }
+    if (errorMsg) {
+      // Show the Add and Drop sections and hide the ProcessingData section
+      $BlockCourseAddEntry.$visible = true;
+      $BlockCourseDrop.$visible = true;
+      $ProcessingData.$visible = false;
+
+      alert("addCheck Error: " + errorMsg,{type:"error"});  // Display Error
+      return;
+    }
+
+  });  // ---------- addCheck Close
 }

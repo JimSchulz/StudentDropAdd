@@ -29,6 +29,7 @@ function showHide() {
       document.getElementById("pbid-AddCRNEntry").value = '';
       document.getElementById("pbid-AddTrackEntry").value = '';
       document.getElementById("pbid-AddConsentEntry").value = '';
+      document.getElementById("pbid-AddConsentEntry-container").style.display = "none";
 
       // Reset and Hide the Message area
       document.getElementById("pbid-AddMessage").value = '';
