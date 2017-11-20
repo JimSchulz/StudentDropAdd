@@ -1,0 +1,45 @@
+/* --------------- cc_global_css ----------------- */
+
+/* --------------- Header Styles ----------------- */
+#header-main-section {
+  background: #D09B2C;
+}
+.institutionalBranding {
+  background-image: url("https://banxet.coloradocollege.edu/institutionLogo.png");
+  width: 11em;
+}
+#header-main-section-east-part {
+  background-color: transparent;
+}
+#header-main-section-east-part #toolsButton, #header-main-section-east-part #userDiv {
+  border-left: 1px #ffffff solid;
+}
+
+
+/* --------------- Global button settings ----------------- */
+/* overrides  some global settings */
+/* do the following to make your buttons match the ellucian buttons...
+    In pagebuilder, button.  Value Style: btn btn-sm
+*/
+
+.btn {
+  border-radius: 3px;
+        margin: 0px 5px 0px 5px;
+        border-color: grey;
+        color: black;
+        background-color: #ebf2f9;
+}
+.btn:hover {
+    /*background-color: #cce4ff;*/
+    background-color: #b3ecff;
+}
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* --------------- Global table row hover ----------------- */
+/* overrides  some global settings */
+tr:hover {
+  background-color: #b3ecff;
+}
