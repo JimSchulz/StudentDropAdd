@@ -1,4 +1,4 @@
-// DropApplyChanges - Button - onClick
+// DropApplyChanges - onClick
 
 // Building 3 Arrays
 //   dropIn - Courses to be dropped
@@ -7,7 +7,6 @@
 
 var table = document.getElementById("pbid-DropGrid");
 var i = 0;
-var summerDropFound = 0;
 var dropFound = 0;
 var dropsIn = '';
 var changesIn = '';
@@ -16,34 +15,44 @@ var trackLabel = '';
 var trk;
 var paws;
 var term = '';
+var regStatus = '';
 var trackChangeConfirmMsg = "Are you sure you want to apply this course track change(s)?";
 var dropConfirmMsg = "Are you sure you want to drop this course? You will be releasing this seat.  If the class is full, rejoining this class might place you on the waiting-list.";
+var dropWLConfirmMsg = "Are you sure you want to drop this waitlisted course? You will be releasing your current waitlisted position.";
 var dropConfirmSummerMsg = "FINANCIAL RESPONSIBILITY\n\nStudents may drop a summer on-campus course three (3) weeks before the course start date with no tuition penalty. When a student drops after three (3) weeks prior to the start date, or up to the third day of the course, 30% of tuition is charged. When a student drops a course after the third day of the block, 100% of tuition is charged. In the case that the Wild Card is available, one may forfeit the Wild Card in lieu of tuition charges.";
 var confirmMsg = '';
 
-// Loop through all DropGrid rows to find any summer course drop
+// Loop through all DropGrid rows to find any course drops
 for (i=0; i<table.rows.length-1; i++) {
   trk = document.getElementById("pbid-Track-" + i);
   term = $DropGrid.$data[i].ACADPERIOD;
+  regStatus = $DropGrid.$data[i].REGSTATUS;
   if (trk.options[trk.selectedIndex].text == 'Drop' && term.substring(4,6) == '30') {
-    summerDropFound = 1;
+    dropFound = 3;  // Summer Course Drop
   }
   if (trk.options[trk.selectedIndex].text == 'Drop') {
-    dropFound = 1;
+    if (regStatus = 'WL') {
+      dropFound = 2;  // Waitlisted Course Drop
+    }
+    else {
+      dropFound = 1;  // Registered Course Drop
+    }
   }
 }
 
 // Assign the appropriate drop confirmation message
 if (dropFound == 1) {
-  confirmMsg = dropConfirmMsg;
+  confirmMsg = dropConfirmMsg;    // Registered Course Drop
 }
-if (summerDropFound) {
-  confirmMsg = dropConfirmMsg + '\n\n' + dropConfirmSummerMsg;
+if (dropFound == 2) {
+  confirmMsg = dropWLConfirmMsg;  // Waitlisted Course Drop
+}
+if (dropFound == 3) {
+  confirmMsg = dropConfirmMsg + '\n\n' + dropConfirmSummerMsg;  // Summer Course Drop
 }
 if (dropFound == 0) {
-  confirmMsg = trackChangeConfirmMsg;
+  confirmMsg = trackChangeConfirmMsg;  // Track Change Only
 }
-
 
 // Prompt user to verify changes
 if (confirm(confirmMsg) == true) {

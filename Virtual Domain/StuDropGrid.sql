@@ -316,7 +316,9 @@ SELECT scip.course_reference_number          "CRN",          -- Term 1 WL Data
        CASE
           WHEN scip.registration_status = 'WL'
           THEN
-             TO_CHAR (scip.registration_sequence_number)
+             sfkwlat.f_get_wl_pos (:stu_pidm,
+                                   scip.academic_period,
+                                   scip.course_reference_number)
           ELSE
              ssrmeet_bldg_code || ' ' || ssrmeet_room_code
        END
@@ -656,7 +658,9 @@ SELECT scip.course_reference_number          "CRN",          -- Term 2 WL Data
        CASE
           WHEN scip.registration_status = 'WL'
           THEN
-             TO_CHAR (scip.registration_sequence_number)
+             sfkwlat.f_get_wl_pos (:stu_pidm,
+                                   scip.academic_period,
+                                   scip.course_reference_number)
           ELSE
              ssrmeet_bldg_code || ' ' || ssrmeet_room_code
        END
@@ -996,7 +1000,9 @@ SELECT scip.course_reference_number          "CRN",          -- Term 3 WL Data
        CASE
           WHEN scip.registration_status = 'WL'
           THEN
-             TO_CHAR (scip.registration_sequence_number)
+             sfkwlat.f_get_wl_pos (:stu_pidm,
+                                   scip.academic_period,
+                                   scip.course_reference_number)
           ELSE
              ssrmeet_bldg_code || ' ' || ssrmeet_room_code
        END
@@ -1336,7 +1342,9 @@ SELECT scip.course_reference_number          "CRN",          -- Term 4 WL Data
        CASE
           WHEN scip.registration_status = 'WL'
           THEN
-             TO_CHAR (scip.registration_sequence_number)
+             sfkwlat.f_get_wl_pos (:stu_pidm,
+                                   scip.academic_period,
+                                   scip.course_reference_number)
           ELSE
              ssrmeet_bldg_code || ' ' || ssrmeet_room_code
        END
@@ -1681,7 +1689,9 @@ SELECT scip.course_reference_number          "CRN",          -- Term 5 WL Data
        CASE
           WHEN scip.registration_status = 'WL'
           THEN
-             TO_CHAR (scip.registration_sequence_number)
+             sfkwlat.f_get_wl_pos (:stu_pidm,
+                                   scip.academic_period,
+                                   scip.course_reference_number)
           ELSE
              ssrmeet_bldg_code || ' ' || ssrmeet_room_code
        END
@@ -2027,7 +2037,9 @@ SELECT scip.course_reference_number          "CRN",          -- Term 6 WL Data
        CASE
           WHEN scip.registration_status = 'WL'
           THEN
-             TO_CHAR (scip.registration_sequence_number)
+             sfkwlat.f_get_wl_pos (:stu_pidm,
+                                   scip.academic_period,
+                                   scip.course_reference_number)
           ELSE
              ssrmeet_bldg_code || ' ' || ssrmeet_room_code
        END

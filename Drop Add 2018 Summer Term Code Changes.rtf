@@ -5,19 +5,19 @@
 \margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 Drop Add code changes for 2017 Summer Term\
+\f0\fs24 \cf0 Drop Add code changes for 2018 Summer Term\
 \
 GenSchedTerms - Virtual Domain - added \'93AND\'94 clause\
 \
-    AND stvterm_code = '201730' -- Temporary restriction for initial rollout\
+    AND stvterm_code = '201830' -- Temporary restriction for initial rollout\
 \
-DropGrid - onLoad event - added for look at bottom\
+DropGrid - onLoad event - added for loop at bottom\
 \
     // Temporary Code for initial Summer release\
     var term = '';\
     for (i=0; i<table.rows.length-1; i++) \{  // Loop through all DropGrid rows\
       term = $DropGrid.$data[i].ACADPERIOD;\
-      if (term != "201730") \{\
+      if (term != "201830") \{\
         document.getElementById("pbid-Track-" + i).style.display = "none";  // Hide Track select list\
       \}\
     \}}
